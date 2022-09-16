@@ -1,0 +1,34 @@
+# macOS
+*.DS_Store
+
+
+# Images
+
+
+# Data
+dlib
+data
+*.csv
+*.txt
+*.json
+
+# Jupyter
+.ipynb_checkpoints
+*.ipynb
+
+# Test files
+.cache
+
+# Python module stuff
+*.pyc
+
+# Python cache stuff
+*.egg-info
+__pycache__
+dist
+build
+.idea
+/Results/
+/module/
+/Images/
+/Images2/
