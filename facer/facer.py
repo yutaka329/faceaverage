@@ -43,10 +43,10 @@ def save_landmarks_to_disk(points, fp):
     with open(fp, "w") as outfile:
         outfile.write(txt)
 
-def glob_image_files(root, extensions=["jpg", "jpeg", "png", "PNG"]):
+def glob_image_files(root, extensions=["jpg", "jpeg", "png"]):
     """Returns a list of image files in `root`"""
     files = glob.glob(os.path.join(root, "*"))
-    return [f for f in files if f.rsplit(".", 1)[-1] in extensions]
+    return [f for f in files if (f.rsplit(".", 1)[-1]).lower() in extensions]
 
 def load_images(root, verbose=True):
     """Returns list of image arrays
@@ -54,6 +54,8 @@ def load_images(root, verbose=True):
     :param verbose: (bool) Toggle verbosity
     :output images: (dict) Dict of OpenCV image arrays, key is filename
     """
+    print("find image with extensions (jpg, jpeg, png)")
+
     files = sorted(glob_image_files(root))
     num_files = len(files)
     if verbose:
@@ -66,6 +68,11 @@ def load_images(root, verbose=True):
         if verbose and n % N == 0:
             print(f"({n + 1} / {num_files}): {file}")
         image = cv2.imread(file)
+        if image is None:
+            continue
+        if len(image.shape) != 3:
+            continue
+
         h = image.shape[0]
         w = image.shape[1]
         max_side = max(h,w)
